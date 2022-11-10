@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter as BrowserRouter, Route, Routes } from "react-router-dom";
 
 import JobsBoard from "./pages/jobsBoard";
 import JobDetailed from "./pages/jobDetailed";
