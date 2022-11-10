@@ -26,3 +26,24 @@ export const timeSince = (date: Date) => {
   }
   return Math.floor(seconds) + " seconds";
 };
+
+export const getDetails = (text: string) => {
+  const arr = text?.split(" ");
+  const respIndex = arr?.indexOf("Responsopilities:\n");
+  const compIndex = arr?.indexOf("\nCompensation");
+
+  const desc = arr?.slice(0, respIndex).join(" ");
+  const responsibilities = arr?.slice(respIndex + 1, compIndex).join(" ");
+  const benefits = arr?.slice(compIndex + 3).join(" ");
+
+  return { desc, responsibilities, benefits };
+};
+
+export const range = (start: number, end: number) => {
+  let length = end - start + 1;
+  /*
+  	Create an array of certain length and set the elements within it from
+    start value to end value.
+  */
+  return Array.from({ length }, (_, idx) => idx + start);
+};
