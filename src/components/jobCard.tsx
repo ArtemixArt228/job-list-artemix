@@ -35,7 +35,7 @@ const JobCard = ({
   }, []);
 
   return (
-    <article className="max-w-[1400px] xl:h-[164px] bg-white px-[16px] xl:py-[24px] pt-[44px] pb-[27px] flex items-center md:gap-[32px] gap-[19px] rounded-[8px] my-[4px] shadow-lg relative hover:bg-[#f0f0f0] hover:transition">
+    <article className="max-w-[1400px] max-[425px]:min-h-[210px] xl:h-[164px] bg-white px-[16px] xl:py-[24px] pt-[44px] pb-[27px] flex items-center md:gap-[32px] gap-[19px] rounded-[8px] my-[4px] shadow-lg relative hover:bg-[#f0f0f0] hover:transition">
       <div className="flex flex-col self-start h-full max-[1060px]:pt-[15px]  ">
         <img
           src={pictures[0]}
