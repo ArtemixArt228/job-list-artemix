@@ -17,6 +17,7 @@ const defaultOptions = {
   scrollwheel: true,
   disableDoubleClickZoom: false,
   fullscreenControl: false,
+  maxZoom: 5,
   styles: defaultTheme,
 };
 
