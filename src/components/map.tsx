@@ -56,7 +56,7 @@ function MapGoogle({ lat, long }: ILocation) {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={4}
+      zoom={2}
       onLoad={onLoad}
       onUnmount={onUnmount}
       options={defaultOptions}
