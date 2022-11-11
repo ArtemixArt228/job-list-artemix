@@ -47,6 +47,7 @@ const JobCard = ({
         <Link
           to={`/${id}`}
           className="text-headline-clr font-bold text-[20px] max-[1060px]:pt-[15px] max-[760px]:text-[18px] max-[425px]:pb-14"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           {title}
         </Link>
