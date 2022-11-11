@@ -14,7 +14,7 @@ import { getDetails, timeSince } from "../utils/helpers";
 import ApplyBtn from "../components/applyBtn";
 import InfoCard from "../components/infoCard";
 
-import ReactMapGl from "react-map-gl";
+import MapGoogle from "../components/map";
 
 const JobDetailed = () => {
   const [job, setJob] = useState<IJobs<ILocation>>({} as IJobs<ILocation>);
@@ -194,7 +194,9 @@ const JobDetailed = () => {
           </div>
           <div className="w-full absolute bottom-0 h-[50%] overflow-hidden">
             {job?.location && (
-              <ReactMapGl></ReactMapGl>
+              <div>
+                <MapGoogle />
+              </div>
               /* <MapContainer
                 center={[job?.location?.lat, job?.location?.long]}
                 zoom={10}

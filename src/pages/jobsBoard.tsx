@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { useGetJobsQuery } from "../redux/services/jobs";
 
@@ -11,29 +11,33 @@ import Pagination from "../components/pagination";
 const PageSize = 10;
 
 const JobsBoard = () => {
-  //const [jobs, setJobs] = useState<any>();
+  const [jobs, setJobs] = useState<any>();
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading, isError } = useGetJobsQuery();
 
-  // useEffect(() => {
-  //   setJobs(data);
-  // }, []);
+  useEffect(() => {
+    setJobs(data);
+  }, [isLoading]);
 
-  /*const currentTableData = useMemo(() => {
+  useEffect(() => {
+    currentTableData();
+  }, [currentPage]);
+
+  const currentTableData = () => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return data!.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);*/
+    return data?.slice(firstPageIndex, lastPageIndex);
+  };
 
-  if (isLoading) {
+  if (isLoading || !jobs) {
     return (
       <div className="w-full h-[100vh] grid place-items-center text-gray-500 text-3xl p-4 text-center">
         Loading...
       </div>
     );
   }
-
+  console.log(data);
   if (isError) {
     return (
       <div className="w-full h-[100vh] grid place-items-center text-red-900 text-3xl p-4 text-center">
@@ -45,11 +49,11 @@ const JobsBoard = () => {
   return (
     <main className="bg-[#E6E9F2] py-[25px]">
       <div className="max-w-[1440px] px-[20px] m-auto">
-        {data?.map((job: IJobs<ILocation>) => (
+        {currentTableData()?.map((job: IJobs<ILocation>) => (
           <JobCard key={job.id} {...job} />
         ))}
       </div>
-      <div className="mt-[50px] mb-[30px] bg-white w-[515px] m-auto rounded-[8px]">
+      <div className="mt-[50px] mb-[30px] px-1 bg-white max-w-[515px] max-[425px]:w-[300px] m-auto rounded-[8px]">
         <Pagination
           currentPage={currentPage}
           totalCount={data!.length}

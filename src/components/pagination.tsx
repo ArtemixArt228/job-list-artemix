@@ -43,15 +43,17 @@ const Pagination = (props: IProps) => {
 
   let lastPage = paginationRange![paginationRange!.length - 1];
   return (
-    <ul className="h-[52px] flex items-center gap-12 justify-between">
+    <ul className="h-[52px] flex items-center md:gap-12 gap-6 justify-between text-[21px] font-bold">
       {/* Left navigation arrow */}
       <li
         onClick={onPrevious}
-        className="flex items-center px-[25px] h-[30px] border-r-2"
+        className={`flex items-center px-[25px] h-[30px] border-r-2 text-[#7D859C] ${
+          currentPage === 1 ? "pointer-events-none" : "cursor-pointer"
+        }`}
       >
-        <FiChevronLeft />
+        <FiChevronLeft className="text-3xl max-[380px]:text-[18px]" />
       </li>
-      <div className="flex gap-4">
+      <div className="flex gap-4 text-[21px] text-[#70778B] font-bold h-full">
         {paginationRange?.map((pageNumber, index) => {
           // If the pageItem is a DOT, render the DOTS unicode character
           if (pageNumber === DOTS) {
@@ -64,7 +66,14 @@ const Pagination = (props: IProps) => {
 
           // Render our Page Pills
           return (
-            <li key={index} onClick={() => onPageChange(pageNumber)}>
+            <li
+              className={`${
+                index + 1 === currentPage &&
+                "text-[#5876C5] border-b-4 border-[#5876C5]"
+              } cursor-pointer  w-[20px] text-center mt-[10px]`}
+              key={index}
+              onClick={() => onPageChange(pageNumber)}
+            >
               {pageNumber}
             </li>
           );
@@ -74,9 +83,11 @@ const Pagination = (props: IProps) => {
       {/*  Right Navigation arrow */}
       <li
         onClick={onNext}
-        className="flex items-center px-[25px] h-[30px] border-l-2"
+        className={`flex items-center px-[25px] h-[30px] border-l-2 text-[#7D859C] ${
+          currentPage === lastPage ? "pointer-events-none" : "cursor-pointer"
+        }`}
       >
-        <FiChevronRight />
+        <FiChevronRight className="text-3xl max-[380px]:text-[18px]" />
       </li>
     </ul>
   );

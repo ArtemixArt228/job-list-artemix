@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { IJobs, ILocation } from "../models/jobs";
 
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { BsBookmark } from "react-icons/bs";
+import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
 import { Link } from "react-router-dom";
 
@@ -18,6 +18,9 @@ const JobCard = ({
   id,
   createdAt,
 }: IJobs<ILocation>) => {
+  const [saved, setSaved] = useState(false);
+  console.log(saved);
+
   return (
     <article className="max-w-[1400px] xl:h-[164px] bg-white px-[16px] xl:py-[24px] pt-[44px] pb-[27px] flex items-center md:gap-[32px] gap-[19px] rounded-[8px] my-[4px] shadow-lg relative hover:bg-[#f0f0f0] hover:transition">
       <div className="flex flex-col self-start h-full max-[1060px]:pt-[15px]  ">
@@ -45,7 +48,17 @@ const JobCard = ({
       <div className="max-[1060px]:absolute max-[1060px]:left-6 max-[1060px]:top-4">
         <StarsRating />
       </div>
-      <BsBookmark className="text-2xl text-headline-clr absolute xl:top-6 right-6 bottom-6 cursor-pointer" />
+      {!saved ? (
+        <BsBookmark
+          onClick={() => setSaved((prevState) => !prevState)}
+          className="text-2xl text-headline-clr absolute xl:top-6 right-6 bottom-6 cursor-pointer"
+        />
+      ) : (
+        <BsFillBookmarkFill
+          onClick={() => setSaved((prevState) => !prevState)}
+          className="text-2xl text-headline-clr absolute xl:top-6 right-6 bottom-6 cursor-pointer"
+        />
+      )}
       <p className="text-headline-clr absolute bottom-6 right-6 max-[1280px]:top-4 max-[380px]:top-[17px] cursor-pointer max-[380px]:text-[13px] h-4">
         Posted {timeSince(createdAt)} ago
       </p>
