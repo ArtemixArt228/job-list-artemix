@@ -69,7 +69,7 @@ const JobDetailed = () => {
   }
 
   return (
-    <div className="xl:bg-white flex xl:flex-row xl:gap-[115px] xl:max-w-[1350px] xl:m-auto xl:my-[56px] flex-col w-full pt-[24px] px-[17px]">
+    <div className="xl:bg-white flex xl:flex-row xl:gap-[115px] xl:max-w-[1350px] xl:m-auto xl:my-[56px] flex-col w-full py-[24px] px-[17px]">
       <main>
         <div className="xl:w-[725px] flex flex-col xl:pl-24">
           <header className="flex flex-col sm:flex-row sm:justify-between sm:items-center sm:pb-[9px] sm:border-b sm:border-line">
