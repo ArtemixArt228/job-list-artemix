@@ -18,4 +18,7 @@ export interface IJobs<T> {
   updatedAt: Date;
   description: string;
   employment_type: string[];
+  rating?: number;
+  saved?: boolean;
+  index?: number;
 }

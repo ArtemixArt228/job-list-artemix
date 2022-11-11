@@ -47,3 +47,10 @@ export const range = (start: number, end: number) => {
   */
   return Array.from({ length }, (_, idx) => idx + start);
 };
+
+export const getCountry = async (lat: number, long: number) => {
+  const url = `https://api.geoapify.com/v1/geocode/search?text=Hannoverstr.&bias=proximity:${lat},${long}&format=json&apiKey=86f33369ddfc4a7aaf7bd6befbe71124`;
+  let response = await fetch(url);
+  let { results } = await response.json();
+  return { city: results[0].city, country: results[0].country };
+};

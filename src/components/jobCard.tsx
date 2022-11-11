@@ -7,19 +7,32 @@ import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 
 import { Link } from "react-router-dom";
 
-import { timeSince } from "../utils/helpers";
+import { getCountry, timeSince } from "../utils/helpers";
 import StarsRating from "./starsRating";
+import { useAppSelector } from "../hooks/redux";
+import { useActions } from "../hooks/actions";
 
 const JobCard = ({
   pictures,
   title,
   name,
-  address,
   id,
   createdAt,
+  location,
 }: IJobs<ILocation>) => {
-  const [saved, setSaved] = useState(false);
-  console.log(saved);
+  const saved = useAppSelector((store) => store.jobs?.jobsList)?.find(
+    (job) => job.id === id
+  )?.saved;
+
+  // console.log(job);
+
+  const { saveJob, unSaveJob } = useActions();
+
+  const [loc, setLoc] = useState<any>({});
+
+  useEffect(() => {
+    getCountry(location?.long, location?.lat).then((data) => setLoc(data));
+  }, []);
 
   return (
     <article className="max-w-[1400px] xl:h-[164px] bg-white px-[16px] xl:py-[24px] pt-[44px] pb-[27px] flex items-center md:gap-[32px] gap-[19px] rounded-[8px] my-[4px] shadow-lg relative hover:bg-[#f0f0f0] hover:transition">
@@ -42,20 +55,26 @@ const JobCard = ({
         </div>
         <div className="text-primary flex items-center gap-3 max-[425px]:left-[15px] max-[425px]:bottom-[20px] max-[425px]:absolute">
           <FaMapMarkerAlt />
-          <p>{address}</p>
+          <p>
+            {loc?.city}, {loc?.country}
+          </p>
         </div>
       </div>
       <div className="max-[1060px]:absolute max-[1060px]:left-6 max-[1060px]:top-4">
-        <StarsRating />
+        <StarsRating id={id} />
       </div>
       {!saved ? (
         <BsBookmark
-          onClick={() => setSaved((prevState) => !prevState)}
+          onClick={() => {
+            saveJob(id);
+          }}
           className="text-2xl text-headline-clr absolute xl:top-6 right-6 bottom-6 cursor-pointer"
         />
       ) : (
         <BsFillBookmarkFill
-          onClick={() => setSaved((prevState) => !prevState)}
+          onClick={() => {
+            unSaveJob(id);
+          }}
           className="text-2xl text-headline-clr absolute xl:top-6 right-6 bottom-6 cursor-pointer"
         />
       )}

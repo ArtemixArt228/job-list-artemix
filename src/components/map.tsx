@@ -1,7 +1,9 @@
 import React from "react";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 import defaultTheme from "../utils/theme";
+
+import { ILocation } from "../models/jobs";
 
 const defaultOptions = {
   panControl: true,
@@ -23,14 +25,14 @@ const containerStyle = {
   height: "400px",
 };
 
-const center = {
-  lat: -3.745,
-  lng: -38.523,
-};
-
-function MapGoogle() {
+function MapGoogle({ lat, long }: ILocation) {
   const API_KEY =
     process.env.REACT_APP_API_KEY || "AIzaSyCMRnTYl6n3YO7yqHZ2wRtHAPdUdgKYvwQ";
+
+  const center = {
+    lat,
+    lng: long,
+  };
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -54,16 +56,15 @@ function MapGoogle() {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={10}
+      zoom={5}
       onLoad={onLoad}
       onUnmount={onUnmount}
       options={defaultOptions}
     >
-      {/* Child components, such as markers, info windows, etc. */}
-      <></>
+      <Marker position={center} icon={{ url: "../assets/icon-map" }} />
     </GoogleMap>
   ) : (
-    <></>
+    <>Loading...</>
   );
 }
 

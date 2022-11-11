@@ -7,17 +7,34 @@ import JobCard from "../components/jobCard";
 import { IJobs, ILocation } from "../models/jobs";
 
 import Pagination from "../components/pagination";
+import { useActions } from "../hooks/actions";
+
+import { LS_JOBS_KEY } from "../redux/features/jobsSlice";
+import { useAppSelector } from "../hooks/redux";
 
 const PageSize = 10;
 
 const JobsBoard = () => {
-  const [jobs, setJobs] = useState<any>();
+  const jobs = useAppSelector((store) => store.jobs?.jobsList);
+
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { getAllJobs } = useActions();
 
   const { data, isLoading, isError } = useGetJobsQuery();
 
   useEffect(() => {
-    setJobs(data);
+    console.log(data);
+    if (!JSON.parse(localStorage.getItem(LS_JOBS_KEY) as string) && data) {
+      console.log("done");
+      getAllJobs(
+        data?.map((job) => ({
+          ...job,
+          rating: 0,
+          saved: false,
+        })) as IJobs<ILocation>[]
+      );
+    }
   }, [isLoading]);
 
   useEffect(() => {
@@ -27,17 +44,17 @@ const JobsBoard = () => {
   const currentTableData = () => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return data?.slice(firstPageIndex, lastPageIndex);
+    return jobs?.slice(firstPageIndex, lastPageIndex);
   };
 
-  if (isLoading || !jobs) {
+  if (isLoading) {
     return (
       <div className="w-full h-[100vh] grid place-items-center text-gray-500 text-3xl p-4 text-center">
         Loading...
       </div>
     );
   }
-  console.log(data);
+
   if (isError) {
     return (
       <div className="w-full h-[100vh] grid place-items-center text-red-900 text-3xl p-4 text-center">
@@ -49,7 +66,7 @@ const JobsBoard = () => {
   return (
     <main className="bg-[#E6E9F2] py-[25px]">
       <div className="max-w-[1440px] px-[20px] m-auto">
-        {currentTableData()?.map((job: IJobs<ILocation>) => (
+        {currentTableData()?.map((job: IJobs<ILocation>, i: number) => (
           <JobCard key={job.id} {...job} />
         ))}
       </div>

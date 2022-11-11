@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 
 import { AiFillStar } from "react-icons/ai";
+import { useActions } from "../hooks/actions";
+import { useAppSelector } from "../hooks/redux";
 
-const StarsRating = () => {
-  const [rating, setRating] = useState(0);
+const StarsRating = ({ id }: { id: string }) => {
+  const { changeRating } = useActions();
+
+  const rating =
+    useAppSelector(
+      (store) => store.jobs?.jobsList?.find((job) => job.id === id)?.rating
+    ) || 0;
+
   const [hover, setHover] = useState(0);
   return (
     <div className="md:text-3xl text-xl xl:ml-28">
@@ -16,7 +24,10 @@ const StarsRating = () => {
             className={
               index > (hover || rating) ? "text-primary" : "text-[#38415D]"
             }
-            onClick={() => setRating(index)}
+            onClick={() => {
+              // setRating(index);
+              changeRating({ id, rating: index });
+            }}
             onMouseEnter={() => setHover(index)}
             onMouseLeave={() => setHover(rating)}
           >

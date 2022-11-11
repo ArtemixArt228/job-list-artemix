@@ -176,16 +176,16 @@ const JobDetailed = () => {
           </Link>
         </div>
       </main>
-      <aside className="max-[1200px]:mt-[60px]">
-        <h4 className="max-[1200px]:font-bold max-[1200px]:text-[28px] max-[1200px]:text-[#3A4562] max-[1200px]:pb-[9px] max-[1200px]:border-b max-[1200px]:border-line max-[1200px]:mb-[21px] hidden">
+      <aside className="max-[1280px]:mt-[60px]">
+        <h4 className="max-[1280px]:font-bold max-[1280px]:text-[28px] max-[1280px]:text-[#3A4562] max-[1280px]:pb-[9px] max-[1280px]:border-b max-[1280px]:border-line max-[1280px]:mb-[21px] xl:hidden">
           Contacts
         </h4>
-        <div className="w-[402px] h-[436px] max-[1200px]:w-[310px] pt-[31px] bg-[#2A3047] rounded-[8px] text-[#E7EAF0] relative overflow-hidden">
+        <div className="max-[1280px]:m-auto w-[402px] h-[436px] max-[1200px]:w-[310px] pt-[31px] bg-[#2A3047] rounded-[8px] text-[#E7EAF0] relative overflow-hidden">
           <div className="absolute rounded-full h-[273px] w-[273px] right-[43%] bg-[#202336] top-[-5%]"></div>
-          <div className="relative px-[63px] z-10">
+          <div className="relative px-[63px] max-[1200px]:px-[40px] z-10">
             <h3>Department name</h3>
             <p>{job.name}</p>
-            <div>
+            <div className="flex gap-2 items-center my-4">
               <FaMapMarkerAlt />
               <span>{job.address}</span>
             </div>
@@ -195,22 +195,8 @@ const JobDetailed = () => {
           <div className="w-full absolute bottom-0 h-[50%] overflow-hidden">
             {job?.location && (
               <div>
-                <MapGoogle />
+                <MapGoogle lat={job?.location.lat} long={job?.location.long} />
               </div>
-              /* <MapContainer
-                center={[job?.location?.lat, job?.location?.long]}
-                zoom={10}
-              >
-                <TileLayer
-                  attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-                  url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
-                />
-                <Marker position={[job?.location?.lat, job?.location?.long]}>
-                  <Popup>
-                    Artemix often here, come over for a cup of coffee :)
-                  </Popup>
-                </Marker>
-              </MapContainer>*/
             )}
           </div>
         </div>
