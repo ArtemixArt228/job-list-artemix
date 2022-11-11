@@ -6,7 +6,12 @@ import { useGetJobsQuery } from "../redux/services/jobs";
 
 import { IJobs, ILocation } from "../models/jobs";
 
-import { BsBookmark, BsChevronLeft, BsShareFill } from "react-icons/bs";
+import {
+  BsBookmark,
+  BsChevronLeft,
+  BsShareFill,
+  BsFillBookmarkFill,
+} from "react-icons/bs";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
 import { getDetails, timeSince } from "../utils/helpers";
@@ -15,6 +20,8 @@ import ApplyBtn from "../components/applyBtn";
 import InfoCard from "../components/infoCard";
 
 import MapGoogle from "../components/map";
+import { useAppSelector } from "../hooks/redux";
+import { useActions } from "../hooks/actions";
 
 const JobDetailed = () => {
   const [job, setJob] = useState<IJobs<ILocation>>({} as IJobs<ILocation>);
@@ -22,6 +29,12 @@ const JobDetailed = () => {
   const { desc, responsibilities, benefits } = getDetails(job?.description);
 
   const { id } = useParams();
+
+  const saved = useAppSelector(
+    (store) => store.jobs?.jobsList?.find((job) => job.id === id)?.saved
+  );
+
+  const { saveJob, unSaveJob } = useActions();
 
   const { data: jobs, isLoading, isError } = useGetJobsQuery();
 
@@ -65,8 +78,18 @@ const JobDetailed = () => {
             </h3>
             <div className="flex items-center gap-8 text-headline-clr text-md max-[640px]:mt-[24px]">
               <div className="flex items-center gap-3">
-                <BsBookmark className="cursor-pointer" />
-                <p>Save to my list</p>
+                {!saved ? (
+                  <BsBookmark
+                    className="cursor-pointer"
+                    onClick={() => saveJob(id as string)}
+                  />
+                ) : (
+                  <BsFillBookmarkFill
+                    className="cursor-pointer"
+                    onClick={() => unSaveJob(id as string)}
+                  />
+                )}
+                <p>{!saved ? "Save" : "Saved"} to my list</p>
               </div>
               <div className="flex items-center gap-3 text-headline-clr">
                 <BsShareFill className="cursor-pointer" />

@@ -56,12 +56,12 @@ function MapGoogle({ lat, long }: ILocation) {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={5}
+      zoom={4}
       onLoad={onLoad}
       onUnmount={onUnmount}
       options={defaultOptions}
     >
-      <Marker position={center} icon={{ url: "../assets/icon-map" }} />
+      <Marker position={center} icon={{ url: "./assets/icon-map.svg" }} />
     </GoogleMap>
   ) : (
     <>Loading...</>

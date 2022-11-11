@@ -75,7 +75,10 @@ const JobsBoard = () => {
           currentPage={currentPage}
           totalCount={data!.length}
           pageSize={PageSize}
-          onPageChange={(page: number) => setCurrentPage(page)}
+          onPageChange={(page: number) => {
+            setCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
         />
       </div>
     </main>
